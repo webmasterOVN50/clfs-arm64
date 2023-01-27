@@ -1,12 +1,12 @@
-export DIST_ROOT=/home/ubuntu/clfs64
+export DIST_ROOT=/home/ubuntu/lxdarm64
 export LFS=$DIST_ROOT/build_env/build_root
 
 echo "Dist_Root: ${DIST_ROOT:?}"
 echo "LFS: ${LFS:?}"
 
-mkdir -p $LFS/sources && chmod -v a+wt $LFS/sources
+#mkdir -p $LFS/sources && chmod -v a+wt $LFS/sources
 
-wget https://www.linuxfromscratch.org/lfs/view/stable-systemd/md5sums -P $LFS/sources
+#wget https://www.linuxfromscratch.org/lfs/view/stable-systemd/md5sums -P $LFS/sources
 
 for f in $(cat $DIST_ROOT/build_env/listpkgs)
 do
@@ -30,33 +30,26 @@ esac
 
 mkdir -pv $LFS/tools
 
-if ! test $(id -u lfs) ; then
 groupadd lfs
 useradd -s /bin/bash -g lfs -m -k /dev/null lfs
 
 passwd lfs
 
-chown -v lfs $LFS/{usr{,/*},lib,var,etc,bin,sbin,tools,sources}
+chown -v lfs $LFS/{usr{,/*},lib,var,etc,bin,sbin,tools}
 case $(uname -m) in
   aarch64) chown -v lfs $LFS/lib64 ;;
 esac
 
 su - lfs
 
-dbhome=$(eval echo "-lfs")
-
-cat > $dbhome/.bash_profile << "EOF"
+cat > ~/.bash_profile << "EOF"
 exec env -i HOME=$HOME TERM=$TERM PS1='\u:\w\$ ' /bin/bash
 EOF
 
-cat > $dbhome/.bashrc << EOF
+cat > ~/.bashrc << "EOF"
 set +h
 umask 022
-LFS=$LFS
-export DIST_ROOT=$DIST_ROOT
-EOF
-
-cat >> $dbhome/.bashrc << "EOF"
+LFS=/mnt/lfs
 LC_ALL=POSIX
 LFS_TGT=$(uname -m)-lfs-linux-gnu
 PATH=/usr/bin
@@ -70,7 +63,6 @@ EOF
 source ~/.bash_profile
 
 echo "completed prepping server"
-
-fi
+ 
 
 
