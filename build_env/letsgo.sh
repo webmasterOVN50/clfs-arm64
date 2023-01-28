@@ -1,4 +1,4 @@
-export DIST_ROOT=/home/ubuntu/clfs64
+export DIST_ROOT=/home/ubuntu/lxdarm64
 export LFS=$DIST_ROOT/build_env/build_root
 
 bad_command_name
@@ -13,9 +13,9 @@ fi
 echo "Creating build environment...."
 cd $DIST_ROOT/build_env
 
-bash -e build_scripts/binutils-pass-1.sh
+#bash -e build_scripts/binutils-pass-1.sh
 bash -e build_scripts/gcc-pass-1.sh
-bash -e build_scripts/linux-headers.sh
-bash -e build_scripts/glibc.sh
+#bash -e build_scripts/linux-headers.sh
+#bash -e build_scripts/glibc.sh
 
 echo "DONE!"

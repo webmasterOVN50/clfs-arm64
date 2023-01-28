@@ -5,8 +5,8 @@ echo
 sleep 1
 
 cd $LFS/sources
-tar -xf binutils-2.49.tar.xz
-cd binutils-2.49
+tar -xf binutils-2.40.tar.xz
+cd binutils-2.40
 
 #bad_command_name
 
